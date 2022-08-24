@@ -1,11 +1,16 @@
-export class MailList extends React.Component{
-    state = {
+import { MailPreview } from './mail-preview.jsx';
 
-    }
-
-
-    render(){
-
-        
-    }
+export function MailList({ mails }) {
+    return <section >
+        <table className='mail-list'>
+            <tbody>
+                {
+                    mails.map(mail =>
+                        <tr className='mail-preview' key={mail.id}>
+                            <MailPreview mail={mail} />
+                        </tr>)
+                }
+            </tbody>
+        </table>
+    </section>
 }

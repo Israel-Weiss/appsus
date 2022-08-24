@@ -9,13 +9,13 @@ export function MailSide() {
         console.log(123);
     }
 
-    return <section className="mail-side">
+    return <section className="mail-side flex column">
         <button className="compose-btn" onClick={Compose()}>+ Compose </button>
 
-        <button className="side-btn" onClick={onFilter('inbox')}>Inbox</button>
-        <button className="side-btn" onClick={onFilter('starred')}>Starred</button>
-        <button className="side-btn" onClick={onFilter('sent')}>Sent Mail</button>
-        <button className="side-btn" onClick={onFilter('drafts')}>Drafts</button>
+        <div className="side-btn" onClick={onFilter('inbox')}>Inbox</div>
+        <div className="side-btn" onClick={onFilter('starred')}>Starred</div>
+        <div className="side-btn" onClick={onFilter('sent')}>Sent Mail</div>
+        <div className="side-btn" onClick={onFilter('drafts')}>Drafts</div>
     </section>
 }
 
