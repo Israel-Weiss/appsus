@@ -1,7 +1,7 @@
 
-import { MailList } from '../apps/cmps/mail-list.jsx';
+import { MailList } from '../cmps/mail-list.jsx'
 
-export class MailList extends React.Component {
+export class MailIndex extends React.Component {
     state = {
         mails: []
     }
