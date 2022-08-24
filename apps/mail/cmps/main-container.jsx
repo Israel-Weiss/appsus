@@ -3,7 +3,7 @@ import { MailList } from './mail-list.jsx';
 
 export function MainContainer({ mails }) {
 
-    return <main>
+    return <main className='main-container flex'>
         <MailSide />
         <MailList mails={mails}/>
     </main>

@@ -2,13 +2,13 @@ const {Link} = ReactRouterDOM
 
 export function MailPreview({ mail }) {
 
-    return <article>
+    return <article className="mail-preview">
         <Link to={"/mail/" + mail.id}>
-            <div className="stared"> * </div>
-            <div className="from">{mail.from}</div>
-            <div className="title">{mail.title}</div>
-            <div className="subject">{mail.subject}</div>
-            <div className="date">{mail.date}</div>
+            <td className="stared"> * </td>
+            <td className="from">{mail.from}</td>
+            <td className="title">{mail.title}</td>
+            <td className="subject">{mail.subject}</td>
+            <td className="date">{mail.date}</td>
         </Link>
     </article>
 }

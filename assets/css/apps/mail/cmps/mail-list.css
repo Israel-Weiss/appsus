@@ -1,0 +1,41 @@
+.mail-list {
+    padding: 8px;
+    background-color: rgb(66, 63, 63);
+    border-radius: 15px;
+    margin-top: 10px;
+}
+
+.mail-preview {
+    padding-top: .6em;
+    padding-bottom: .6em;
+    background-color: rgb(218, 216, 216);
+    width: 80vw;
+}
+
+.mail-preview:hover {
+    background-color: rgb(238, 233, 233);
+    cursor: pointer;
+}
+
+.stared {
+    width: 2vw;
+    padding-left: 2vw;
+    border-radius: 15px;
+
+}
+
+.from {
+    width: 15vw;
+}
+
+.title {
+    width: 15vw;
+}
+
+.subject {
+    width: 35vw;
+}
+
+.date {
+    width: 10vw;
+}
