@@ -1,10 +1,10 @@
 import { MailSide } from './mail-side.jsx';
 import { MailList } from './mail-list.jsx';
 
-export function MainContainer() {
+export function MainContainer({ mails }) {
 
     return <main>
         <MailSide />
-        <MailList />
+        <MailList mails={mails}/>
     </main>
 }
