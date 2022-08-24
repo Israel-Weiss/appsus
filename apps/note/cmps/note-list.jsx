@@ -4,7 +4,7 @@ import { NoteTxt } from "../cmps/note-txt.jsx"
 export class NoteList extends React.Component {
 
     state = {
-        notes: null
+        notes: []
     }
 
     componentDidMount() {
@@ -26,6 +26,8 @@ export class NoteList extends React.Component {
     render() {
         const { notes } = this.state
         const { NotePreview } = this
+
+        console.log(notes);
 
         return <section className="note-list">
             {notes &&
