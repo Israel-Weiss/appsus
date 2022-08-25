@@ -1,6 +1,6 @@
-import { mailService } from "../services/mail.service.js"
+import { mailService } from "../services/mail.service.js";
 import { MailHeader } from '../cmps/mail-header.jsx';
-import { DetailsContainer } from "../cmps/details-container.jsx"
+import { DetailsContainer } from "../cmps/details-container.jsx";
 
 export class MailDetails extends React.Component {
 

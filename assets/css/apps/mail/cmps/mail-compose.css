@@ -1,0 +1,34 @@
+.mail-compose {
+    position: absolute;
+    bottom: 20px;
+    left: 40px;
+    width: 500px;
+    height: 420px;
+    background-color: rgb(226, 222, 222);
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+.compose-input {
+    width: 90%;
+    padding: 10px;
+}
+
+.compose-to {
+    width: 85%;
+    padding: 10px;
+    margin-left: 23px;
+}
+
+.compose-title {
+    width: 85%;
+    padding: 10px;
+    margin-left: 10px;
+}
+
+.compose-body {
+    width: 85%;
+    padding: 10px;
+    margin-left: 8px;
+    height: 200px;
+}

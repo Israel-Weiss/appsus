@@ -1,12 +1,16 @@
+import { MailCompose } from './mail-compose.jsx';
 
-export function MailSide() {
+
+export function MailSide({ renderList }) {
 
     function onFilter(filterBy) {
         console.log(123);
     }
 
+    let displayCompose = false
+
     function Compose() {
-        console.log(123);
+        displayCompose = true
     }
 
     return <section className="mail-side flex column">
@@ -16,6 +20,8 @@ export function MailSide() {
         <div className="side-btn" onClick={onFilter('starred')}>Starred</div>
         <div className="side-btn" onClick={onFilter('sent')}>Sent Mail</div>
         <div className="side-btn" onClick={onFilter('drafts')}>Drafts</div>
+
+        <MailCompose renderList={renderList} display={displayCompose}/>
     </section>
 }
 

@@ -6,7 +6,7 @@ export function MailList({ mails }) {
             <tbody>
                 {
                     mails.map(mail =>
-                        <tr className='mail-preview' key={mail.id}>
+                        <tr className="mail-preview" key={mail.id}>
                             <MailPreview mail={mail} />
                         </tr>)
                 }
