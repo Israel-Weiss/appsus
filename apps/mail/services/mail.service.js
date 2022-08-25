@@ -174,7 +174,7 @@ function save(mail) {
     else return _add(mail)
 }
 
-function _add(title, body, address) {
+function _add({ title, body, address }) {
     let mails = _loadFromStorage()
     const mail = _createMail(title, body, address)
     mails = [mail, ...mails]
@@ -182,13 +182,14 @@ function _add(title, body, address) {
     return Promise.resolve(mail)
 }
 
-function _createMail(title, body,address) {
+function _createMail(title, body, address) {
     gId++
-    return     {
+    const subject = body.substring(0, 36)
+    return {
         id: 'e' + gId,
-        title: 'Frontend Development',
-        subject: 'Frontend developers work on the part',
-        body: 'Frontend developers work on the part of the product with which the user interacts. They are primarily concerned with the user interface (UI). For example, they might create the layout, visual aspects, and interactive elements of a website or app. However, their role isn’t identical to that of a UI or user experience (UX) designer. They also fix bugs and make certain that the UI can run on different browsers.',
+        title,
+        subject,
+        body,
         isIn: false,
         isRead: false,
         isStared: false,
