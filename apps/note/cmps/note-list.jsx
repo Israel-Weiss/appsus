@@ -45,7 +45,7 @@ export class NoteList extends React.Component {
                         style={note.style ? { backgroundColor: note.style.backgroundColor } : { backgroundColor: 'lightcoral' }}>
                         <NotePreview note={note} />
                         <div className="note-icons">
-                            {colorPalleteOpened && <div className="color-pallete flex space-between">
+                            {colorPalleteOpened && <div className="color-pallete flex space-between align-center">
                                 <button className="color-btn lightblue" onClick={() => changeColor(note.id, 'lightblue')}></button>
                                 <button className="color-btn lightgreen" onClick={() => changeColor(note.id, 'lightgreen')}></button>
                                 <button className="color-btn goldenrod" onClick={() => changeColor(note.id, 'goldenrod')}></button>

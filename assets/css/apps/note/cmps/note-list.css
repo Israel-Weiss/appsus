@@ -11,6 +11,7 @@
 .color-pallete{
     border-radius: 10px;
     width: 80%;
+    height: 50px;
     background-color: #f3f3f3;
 }
 .color-btn{
@@ -19,11 +20,11 @@
     height: 30px;
     cursor: pointer;
 }
-.lightblue{background-color: lightblue;}
-.lightgreen{background-color: lightgreen;}
-.goldenrod{background-color: goldenrod;}
-.lightsalmon{background-color: lightsalmon;}
-.lightcoral{background-color: lightcoral;}
+.lightblue{background-color: lightblue;border: 1px solid lightblue;}
+.lightgreen{background-color: lightgreen;border: 1px solid lightgreen;}
+.goldenrod{background-color: goldenrod;border: 1px solid goldenrod;}
+.lightsalmon{background-color: lightsalmon;border: 1px solid lightsalmon}
+.lightcoral{background-color: lightcoral;border: 1px solid lightcoral}
 
 
 /* LOADER  */
