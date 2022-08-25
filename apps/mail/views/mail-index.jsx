@@ -19,6 +19,10 @@ export class MailIndex extends React.Component {
             .then(mails => this.setState({ mails }))
     }
 
+    onCloseDetils = () => {
+        this.props.history.push('/mail')
+    }
+
     render() {
         const { mails } = this.state
         return <section className='mail-index'>

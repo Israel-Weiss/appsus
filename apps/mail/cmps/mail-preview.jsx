@@ -8,7 +8,7 @@ export function MailPreview({ mail }) {
             <td className="from">{mail.from}</td>
             <td className="title">{mail.title}</td>
             <td className="subject">{mail.subject}</td>
-            <td className="date">{mail.date}</td>
+            <td className="date">{mail.sentAt}</td>
         </Link>
     </article>
 }
