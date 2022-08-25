@@ -4,6 +4,7 @@
     max-height: fit-content;
     border-radius: 10px;
     justify-content: space-between;
+    border: 0.5px solid #e0e0e0;
 }
 .note-preview > *,
 .new-note span{

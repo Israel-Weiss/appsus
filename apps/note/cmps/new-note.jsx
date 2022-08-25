@@ -6,6 +6,7 @@ export class NewNote extends React.Component {
         input1Style: { height: '40px' },
         input2Style: { display: 'none' },
         input1placeHolder: 'Take a note...',
+        openedColorPallete: false,
         newNote: {
             type: 'note-txt',
             title: '',
@@ -14,20 +15,20 @@ export class NewNote extends React.Component {
     }
 
     isOpenedInput = false
-    input2ref = React.createRef()
+    input2Ref = React.createRef()
 
     openInput = () => {
-        this.setState({ input2Style: { display: 'block' } }, () => {
-            if (!this.isOpenedInput) this.input2ref.current.focus()
+        this.setState({ input2Style: { display: 'block' }, input1placeHolder: "Title" }, () => {
+            if (!this.isOpenedInput) this.input2Ref.current.focus()
             this.isOpenedInput = true
         })
         this.setState((prevState) => ({ input1Style: { ...prevState.input1Style, marginBlockStart: '0.2rem' } }))
     }
 
     closeInput = () => {
-        this.setState((prevState) => ({ input1Style: { ...prevState.input1Style, marginBlockStart: '0' } }))
-        this.setState({ input1placeHolder: 'Take a note...' })
-        this.setState({ input2Style: { display: 'none' } })
+        this.setState((prevState) => ({ input1Style: { ...prevState.input1Style, marginBlockStart: '0' },
+        input1placeHolder: 'Take a note...',
+        input2Style: { display: 'none' }}))
     }
 
     handleChange = ({ target }) => {
@@ -53,16 +54,23 @@ export class NewNote extends React.Component {
     }
 
     handleType = (type) => {
-        this.setState({ newNote: { ...this.state.newNote, type: type } },()=>{
-            this.setState({ input1placeHolder: type })
-        })
-        // this.setState({ user: {...user, score: updatedScore }})
+        switch (type) {
+            case 'note-img':
+                this.setState({input1placeHolder: 'Put here the Image Source'})
+                break;
+            case 'note-todos':
+                this.setState({input1placeHolder: 'put your todos under the title comma seperated'})
+            default:
+                break;
+        }
+        this.setState({ newNote: { ...this.state.newNote, type: type } })
     }
 
     render() {
 
+        
         const { input1Style, input2Style, input1placeHolder } = this.state
-        const { openInput, handleChange, handleNewNote, handleType } = this
+        const { openInput, handleChange, handleNewNote, handleType, input2Ref } = this
 
         return <div className="new-note">
             <div className="input1">
@@ -78,11 +86,10 @@ export class NewNote extends React.Component {
                 <div className="input2">
                     <textarea type="text"
                         placeholder="Take a Note..."
-                        ref={this.input2ref}
+                        ref={input2Ref}
                         name="body"
                         onChange={handleChange}
-                        onFocus={openInput}
-                        onBlur={handleNewNote} />
+                        onFocus={openInput} />
                 </div>
                 <div className="btns-new-note flex space-between">
                     <div className="new-note-edit-btns flex space-between">

@@ -8,6 +8,22 @@
 .note-list>a {
     height: fit-content;
 }
+.color-pallete{
+    border-radius: 10px;
+    width: 80%;
+    background-color: #f3f3f3;
+}
+.color-btn{
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+.lightblue{background-color: lightblue;}
+.lightgreen{background-color: lightgreen;}
+.goldenrod{background-color: goldenrod;}
+.lightsalmon{background-color: lightsalmon;}
+.lightcoral{background-color: lightcoral;}
 
 
 /* LOADER  */

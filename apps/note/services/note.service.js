@@ -6,6 +6,7 @@ export const noteService = {
     addNote,
     updateNote,
     removeNote,
+    changeColor
 }
 
 function queryNotes() {
@@ -30,8 +31,8 @@ function addNote(type,content) {
             newNote = _createNote(type,content)
             break;
         case 'note-todos':
-            // info = createTodosNote(content)
-            // newNote = _createNote(type,info)
+            let info = createTodosNote(content)
+            newNote = _createNote(type,info)
             break;
     }
     console.log(newNote);
@@ -41,8 +42,24 @@ function addNote(type,content) {
 }
 
 function createTodosNote(content) {
+    const info = {
+        title: content.title,
+        todos: []
+    }
+    let todoSpliter = content.txt.split(",")
+    const todos = todoSpliter.map(todo=> {
+        info.todos.push({txt: todo, doneAt: null})
+    })
 
-    console.log(content);
+    return info
+}
+
+function changeColor(noteId,color) {
+    let notes = storageService.loadFromStorage('notesDB')
+    const note = notes.find(note=> note.id === noteId)
+    note.style.backgroundColor = color
+    storageService.saveToStorage('notesDB', notes)
+    return Promise.resolve(notes)
 }
 
 function updateNote(updatedNote) {
@@ -76,6 +93,9 @@ const gNotes = [
         info: {
             title: "Hi there",
             txt: "Fullstack Me Baby!"
+        },
+        style: {
+            backgroundColor: "lightseagreen"
         }
     },
     {
@@ -84,6 +104,9 @@ const gNotes = [
         isPinned: true,
         info: {
             txt: "Fullstack Me Baby!"
+        },
+        style: {
+            backgroundColor: "lightseagreen"
         }
     },
     {
@@ -92,6 +115,9 @@ const gNotes = [
         isPinned: true,
         info: {
             txt: "Fullstack Me Baby!"
+        },
+        style: {
+            backgroundColor: "lightseagreen"
         }
     },
     {
@@ -100,6 +126,9 @@ const gNotes = [
         isPinned: true,
         info: {
             txt: "Fullstack Me Baby!"
+        },
+        style: {
+            backgroundColor: "lightseagreen"
         }
     },
     {
@@ -122,6 +151,9 @@ const gNotes = [
                 { txt: "Driving liscence", doneAt: null },
                 { txt: "Coding power", doneAt: 187111111 }
             ]
+        },
+        style: {
+            backgroundColor: "lightseagreen"
         }
     }
 ];
