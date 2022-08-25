@@ -22,8 +22,8 @@ export class NoteIndex extends React.Component {
 
         return (
             <div className="note-index flex column">
-                <NewNote reloadNotes={this.loadNotes}/>
-                <NoteList notes={notes}/>
+                <NewNote />
+                <NoteList notes={notes} />
             </div>
         )
     }

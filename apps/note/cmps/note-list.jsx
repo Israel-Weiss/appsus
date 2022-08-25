@@ -7,11 +7,14 @@ export class NoteList extends React.Component {
 
     state = {
         notes: null,
-        colorPalleteOpened: false
     }
 
     componentDidMount() {
         setTimeout(this.loadNotes, 1000)
+    }
+
+    changeColor = (note, color) => {
+        noteService.changeColor(note, color)
     }
 
     removeNote = (id) => {
@@ -22,19 +25,9 @@ export class NoteList extends React.Component {
     loadNotes = () => {
         this.setState({ notes: this.props.notes })
     }
-    handleColorPallete = () => {
-        this.setState({ colorPalleteOpened: !this.state.colorPalleteOpened })
-    }
-    changeColor = (note, color) => {
-        noteService.changeColor(note, color)
-            .then(notes => this.setState({ notes }))
-            .then(this.handleColorPallete())
-    }
-
 
     render() {
-        const { notes, colorPalleteOpened } = this.state
-        const { removeNote, handleColorPallete, changeColor } = this
+        const { notes } = this.state
 
         if (!notes) return <Spinner />
 
@@ -43,21 +36,7 @@ export class NoteList extends React.Component {
                 notes.map(note => <Link to={`/note/${note.id}`} key={note.id}>
                     <div className="note-preview flex column"
                         style={note.style ? { backgroundColor: note.style.backgroundColor } : { backgroundColor: 'lightcoral' }}>
-                        <NotePreview note={note} />
-                        <div className="note-icons">
-                            {colorPalleteOpened && <div className="color-pallete flex space-between align-center">
-                                <button className="color-btn lightblue" onClick={() => changeColor(note.id, 'lightblue')}></button>
-                                <button className="color-btn lightgreen" onClick={() => changeColor(note.id, 'lightgreen')}></button>
-                                <button className="color-btn goldenrod" onClick={() => changeColor(note.id, 'goldenrod')}></button>
-                                <button className="color-btn lightsalmon" onClick={() => changeColor(note.id, 'lightsalmon')}></button>
-                                <button className="color-btn lightcoral" onClick={() => changeColor(note.id, 'lightcoral')}></button>
-                            </div>}
-                            <i className="fa-solid fa-thumbtack"></i>
-                            <i className="fa-solid fa-palette" onClick={handleColorPallete}></i>
-                            <i className="fa-solid fa-envelope"></i>
-                            <i className="fa-solid fa-pen-to-square"></i>
-                            <i className="fa-solid fa-trash-can" onClick={() => removeNote(note.id)}></i>
-                        </div>
+                        <NotePreview note={note} onRemove={this.removeNote} changeColor={this.changeColor} />
                     </div>
                 </Link>
                 )
