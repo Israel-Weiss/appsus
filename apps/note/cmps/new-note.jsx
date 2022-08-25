@@ -7,6 +7,7 @@ export class NewNote extends React.Component {
         input2Style: { display: 'none' },
         input1placeHolder: 'Take a note...',
         newNote: {
+            type: 'note-txt',
             title: '',
             body: ''
         }
@@ -21,7 +22,6 @@ export class NewNote extends React.Component {
             this.isOpenedInput = true
         })
         this.setState((prevState) => ({ input1Style: { ...prevState.input1Style, marginBlockStart: '0.2rem' } }))
-        this.setState({ input1placeHolder: 'Title' })
     }
 
     closeInput = () => {
@@ -45,17 +45,24 @@ export class NewNote extends React.Component {
         const { newNote } = this.state
         if (newNote.title === '' && newNote.body === '') this.closeInput()
         else {
-            const type = 'note-txt'
+            const type = newNote.type
             const info = { title: newNote.title, txt: newNote.body }
             noteService.addNote(type, info)
-                .then(this.props.reloadNotes)
+                .then(this.closeInput())
         }
+    }
+
+    handleType = (type) => {
+        this.setState({ newNote: { ...this.state.newNote, type: type } },()=>{
+            this.setState({ input1placeHolder: type })
+        })
+        // this.setState({ user: {...user, score: updatedScore }})
     }
 
     render() {
 
         const { input1Style, input2Style, input1placeHolder } = this.state
-        const { openInput, closeInput, handleChange, handleNewNote } = this
+        const { openInput, handleChange, handleNewNote, handleType } = this
 
         return <div className="new-note">
             <div className="input1">
@@ -75,13 +82,13 @@ export class NewNote extends React.Component {
                         name="body"
                         onChange={handleChange}
                         onFocus={openInput}
-                        onBlur={closeInput} />
+                        onBlur={handleNewNote} />
                 </div>
                 <div className="btns-new-note flex space-between">
                     <div className="new-note-edit-btns flex space-between">
                         <i className="fa-solid fa-palette"></i>
-                        <i className="fa-solid fa-image"></i>
-                        <i className="fa-solid fa-list"></i>
+                        <i className="fa-solid fa-image" onClick={() => { handleType('note-img') }}></i>
+                        <i className="fa-solid fa-list" onClick={() => { handleType('note-todos') }}></i>
                     </div>
                     <span onClick={handleNewNote}>Close</span>
                 </div>

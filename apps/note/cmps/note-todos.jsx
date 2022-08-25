@@ -28,7 +28,7 @@ export class NoteTodos extends React.Component {
         const { removeTodo } = this
 
         return <div className="note-todos">
-            <h1>{note.info.label}</h1>
+            <h1>{note.info.title}</h1>
             <ul>
                 {todos.map((todo, idx) => <li key={idx}>{todo.txt} <span onClick={() => removeTodo(idx)}>X</span></li>)}
             </ul>

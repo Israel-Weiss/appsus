@@ -18,18 +18,31 @@ function queryNotes() {
     return Promise.resolve(notes)
 }
 
-function addNote(type,info) {
+function addNote(type,content) {
     let notes = storageService.loadFromStorage('notesDB')
-    const newNote = _createNote(type,info)
-    if(!notes) {
-        notes = []
-        notes.unshift(newNote)
-        storageService.saveToStorage('notesDB',notes)
-        return Promise.resolve(newNote)
+    let newNote
+
+    switch (type) {
+        case 'note-txt':
+            newNote = _createNote(type,content)
+            break;
+        case 'note-img':
+            newNote = _createNote(type,content)
+            break;
+        case 'note-todos':
+            // info = createTodosNote(content)
+            // newNote = _createNote(type,info)
+            break;
     }
+    console.log(newNote);
     notes.unshift(newNote)
-    storageService.saveToStorage('notesDB',notes)
+    storageService.saveToStorage('notesDB', notes)
     return Promise.resolve(newNote)
+}
+
+function createTodosNote(content) {
+
+    console.log(content);
 }
 
 function updateNote(updatedNote) {
@@ -46,12 +59,12 @@ function removeNote(id) {
     return Promise.resolve()
 }
 
-function _createNote(type='note-txt', info) {
+function _createNote(type, content) {
     return {
         id: utilService.makeId(3),
         type,
         isPinned: false,
-        info
+        info: content
     }
 }
 
@@ -93,8 +106,8 @@ const gNotes = [
         id: 105,
         type: "note-img",
         info: {
-            url: "https://picsum.photos/seed/picsum/200/300",
-            title: "Bobi and Messsssss sssssssss"
+            title: "https://picsum.photos/seed/picsum/200/300",
+            txt: "Bobi and Messsssss sssssssss"
         },
         style: {
             backgroundColor: "lightseagreen"
@@ -104,7 +117,7 @@ const gNotes = [
         id: 106,
         type: "note-todos",
         info: {
-            label: "Get my stuff together",
+            title: "Get my stuff together",
             todos: [
                 { txt: "Driving liscence", doneAt: null },
                 { txt: "Coding power", doneAt: 187111111 }
