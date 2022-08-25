@@ -1,6 +1,34 @@
-.note-list{
-    margin-block-start: 1rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fill,235px);
+.note-list {
+    margin-block-start: 5rem;
+    grid-template-columns: repeat(auto-fill, 235px);
     gap: 20px;
+    margin-inline-start: 2rem;
+}
+
+.note-list>a {
+    height: fit-content;
+}
+
+
+/* LOADER  */
+.loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    border: 10px solid #f3f3f3;
+    border-top: 10px solid #3498db;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }

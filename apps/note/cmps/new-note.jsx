@@ -1,26 +1,92 @@
+import { noteService } from '../services/note.service.js'
+
 export class NewNote extends React.Component {
 
-
-
     state = {
-        btnSend: false
+        input1Style: { height: '40px' },
+        input2Style: { display: 'none' },
+        input1placeHolder: 'Take a note...',
+        newNote: {
+            title: '',
+            body: ''
+        }
     }
 
-    toggleSend = () => {
-        this.setState({ btnSend: !this.state.btnSend })
-        console.log(this.state.btnSend);
+    isOpenedInput = false
+    input2ref = React.createRef()
+
+    openInput = () => {
+        this.setState({ input2Style: { display: 'block' } }, () => {
+            if (!this.isOpenedInput) this.input2ref.current.focus()
+            this.isOpenedInput = true
+        })
+        this.setState((prevState) => ({ input1Style: { ...prevState.input1Style, marginBlockStart: '0.2rem' } }))
+        this.setState({ input1placeHolder: 'Title' })
+    }
+
+    closeInput = () => {
+        this.setState((prevState) => ({ input1Style: { ...prevState.input1Style, marginBlockStart: '0' } }))
+        this.setState({ input1placeHolder: 'Take a note...' })
+        this.setState({ input2Style: { display: 'none' } })
+    }
+
+    handleChange = ({ target }) => {
+        const input = target.name
+        const value = target.value
+        this.setState((prevState) => ({
+            newNote: {
+                ...prevState.newNote,
+                [input]: value
+            }
+        }))
+    }
+
+    handleNewNote = () => {
+        const { newNote } = this.state
+        if (newNote.title === '' && newNote.body === '') this.closeInput()
+        else {
+            const type = 'note-txt'
+            const info = { title: newNote.title, txt: newNote.body }
+            noteService.addNote(type, info)
+                .then(this.props.reloadNotes)
+        }
     }
 
     render() {
 
-        const { btnSend } = this.state
-        const { toggleSend } = this
+        const { input1Style, input2Style, input1placeHolder } = this.state
+        const { openInput, closeInput, handleChange, handleNewNote } = this
 
-        return <div className="new-note flex">
-            <input type="text"
-                placeholder="Take a Note..."
-                onClick={toggleSend} />
-            {btnSend && <button>Add</button>}
+        return <div className="new-note">
+            <div className="input1">
+                <input type="text"
+                    placeholder={input1placeHolder}
+                    onFocus={openInput}
+                    name="title"
+                    onChange={handleChange}
+                    style={input1Style} />
+            </div>
+
+            <div className="opened-new-note" style={input2Style}>
+                <div className="input2">
+                    <textarea type="text"
+                        placeholder="Take a Note..."
+                        ref={this.input2ref}
+                        name="body"
+                        onChange={handleChange}
+                        onFocus={openInput}
+                        onBlur={closeInput} />
+                </div>
+                <div className="btns-new-note flex space-between">
+                    <div className="new-note-edit-btns flex space-between">
+                        <i className="fa-solid fa-palette"></i>
+                        <i className="fa-solid fa-image"></i>
+                        <i className="fa-solid fa-list"></i>
+                    </div>
+                    <span onClick={handleNewNote}>Close</span>
+                </div>
+            </div>
+
         </div>
     }
 }

@@ -1,9 +1,11 @@
 import { storageService } from '../../../services/storage.service.js'
+import {utilService} from '../../../services/util.service.js'
+
 export const noteService = {
     queryNotes,
     addNote,
     updateNote,
-    removeNote, 
+    removeNote,
 }
 
 function queryNotes() {
@@ -16,18 +18,18 @@ function queryNotes() {
     return Promise.resolve(notes)
 }
 
-function addNote(note) {
+function addNote(type,info) {
     let notes = storageService.loadFromStorage('notesDB')
-
+    const newNote = _createNote(type,info)
     if(!notes) {
         notes = []
-        notes.unshift(note)
+        notes.unshift(newNote)
         storageService.saveToStorage('notesDB',notes)
-        return Promise.resolve(note)
+        return Promise.resolve(newNote)
     }
-    notes.unshift(note)
+    notes.unshift(newNote)
     storageService.saveToStorage('notesDB',notes)
-    return Promise.resolve(note)
+    return Promise.resolve(newNote)
 }
 
 function updateNote(updatedNote) {
@@ -40,24 +42,26 @@ function updateNote(updatedNote) {
 function removeNote(id) {
     let notes = storageService.loadFromStorage('notesDB')
     notes = notes.filter(note => note.id !== id)
-    storageService.saveToStorage('notesDB','notes')
+    storageService.saveToStorage('notesDB',notes)
     return Promise.resolve()
 }
 
-function _createNote(type, info) {
+function _createNote(type='note-txt', info) {
     return {
-        id: notes[notes.length - 1].id + 1,
+        id: utilService.makeId(3),
         type,
         isPinned: false,
         info
     }
 }
+
 const gNotes = [
     {
         id: 101,
         type: "note-txt",
         isPinned: true,
         info: {
+            title: "Hi there",
             txt: "Fullstack Me Baby!"
         }
     },
@@ -89,11 +93,11 @@ const gNotes = [
         id: 105,
         type: "note-img",
         info: {
-            url: "http://some-img/me",
-            title: "Bobi and Me"
+            url: "https://picsum.photos/seed/picsum/200/300",
+            title: "Bobi and Messsssss sssssssss"
         },
         style: {
-            backgroundColor: "#00d"
+            backgroundColor: "lightseagreen"
         }
     },
     {

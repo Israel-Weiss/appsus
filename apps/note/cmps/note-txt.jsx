@@ -1,22 +1,6 @@
-export class NoteTxt extends React.Component {
-    render() {
-        
-        const { txt } = this.props.info
-
-        return <div className="note-txt">
-            {txt}
-        </div>
-    }
+export function NoteTxt({note}) {
+    return <div className="note-txt">
+        {note.info.title && <h1>{note.info.title}</h1>}
+        <p>{note.info.txt}</p>
+    </div>
 }
-
-// export class CreateNoteTxt extends React.Component{
-//     render() {
-//         const { onChangeVal } = this.props
-
-//         return <div className="create-note-txt">
-//             <textarea type="text"
-//             onChange={(ev) => {onChangeVal(ev.target.value)}} 
-//             />
-//         </div>
-//     }
-// }

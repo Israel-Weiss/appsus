@@ -2,17 +2,40 @@
     text-align: left;
     margin: 32px auto 16px auto;
     width: 600px;
-    height: 46px;
-    box-shadow: 0px 0px 5px 5px #E0E0E0;
     cursor: text;
+    box-shadow: 0px 0px 5px 5px #E0E0E0;
+    border-radius: 10px;
 }
-.new-note input{
-    width: 50%;
-    height: 80%;
-    align-self: center;
+.new-note .input1 input{
+    display: block;
+}
+.new-note .input2 textarea{
+    margin-block-start: 1rem;
+    resize: none;
+}
+.new-note .input1 input,
+.new-note .input2 textarea{
+    width: 80%;
     border: 0;
+    border-radius: 10px;
     padding-inline-start: 1rem;
 }
-.new-note input:focus{
+.new-note .input1 input:focus,
+.new-note .input2 textarea:focus{
     outline: 0;
+}
+.btns-new-note{
+    margin-inline-start: 1rem;
+}
+.new-note-edit-btns{
+    width: 40%;
+}
+.new-note-edit-btns > i{
+    cursor: pointer;
+}
+.btns-new-note span{
+    width: 100px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    text-align: center;
 }

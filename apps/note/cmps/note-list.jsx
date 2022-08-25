@@ -1,41 +1,53 @@
-import { noteService } from "../services/note.service.js";
-import { NoteTxt } from "../cmps/note-txt.jsx"
+import { NotePreview } from "./note-preview.jsx";
+import { noteService } from '../services/note.service.js'
+import { Spinner } from '../cmps/loader.js'
+const { Link } = ReactRouterDOM
 
 export class NoteList extends React.Component {
 
     state = {
-        notes: []
+        notes: null
     }
 
     componentDidMount() {
-        this.loadNotes()
+        setTimeout(this.loadNotes, 1000)
+    }
+
+    removeNote = (id) => {
+        noteService.removeNote(id)
+            .then(this.setState({ notes: this.state.notes.filter(note => note.id !== id) }))
     }
 
     loadNotes = () => {
-        noteService.queryNotes()
-            .then(notes => this.setState({ notes }))
+        this.setState({ notes: this.props.notes })
     }
 
-    NotePreview = (props) => {
-        switch (props.type) {
-            case 'note-txt':
-                return <NoteTxt {...props} />
-        }
-    }
 
     render() {
         const { notes } = this.state
-        const { NotePreview } = this
+        const { removeNote } = this
 
-        console.log(notes);
+        if (!notes) return <Spinner />
 
-        return <section className="note-list">
+        return <section className="note-list grid">
             {notes &&
-                notes.map(note => <div className="note-preview" key={note.id}>
-                    <NotePreview type={note.type} info={note.info} />
-                </div>
+                notes.map(note => <Link to={`/note/${note.id}`} key={note.id}>
+                    <div className="note-preview flex column"
+                        style={note.style ? { backgroundColor: note.style.backgroundColor } : { backgroundColor: 'lightcoral' }}>
+                        <NotePreview note={note} />
+                        <div className="note-icons">
+                            <i className="fa-solid fa-thumbtack"></i>
+                            <i className="fa-solid fa-palette"></i>
+                            <i className="fa-solid fa-envelope"></i>
+                            <i className="fa-solid fa-pen-to-square"></i>
+                            <i className="fa-solid fa-trash-can" onClick={() => removeNote(note.id)}></i>
+                        </div>
+                    </div>
+                </Link>
                 )
             }
         </section>
     }
 }
+
+{/* <NotePreview type={note.type} info={note.info} /> */ }

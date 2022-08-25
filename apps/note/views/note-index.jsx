@@ -18,14 +18,12 @@ export class NoteIndex extends React.Component {
     }
 
     render() {
-
         const { notes } = this.state
-        console.log(notes);
 
         return (
             <div className="note-index flex column">
-                <NewNote />
-                <NoteList />
+                <NewNote reloadNotes={this.loadNotes}/>
+                <NoteList notes={notes}/>
             </div>
         )
     }
