@@ -2,10 +2,13 @@ import { storageService } from '../../../services/storage.service.js'
 
 export const mailService = {
     query,
-    getById
+    getById,
+    remove,
+    save
 }
 
 const KEY = 'mailDB'
+var gId = 110
 
 const gMails = [
     {
@@ -152,7 +155,7 @@ const gMails = [
 
 function query() {
     let mails = _loadFromStorage()
-    if (!mails) {
+    if (!mails || mails.length < 1) {
         mails = gMails
         _saveToStorage(mails)
     }
@@ -164,6 +167,51 @@ function getById(mailId) {
     const mails = _loadFromStorage()
     const mail = mails.find(mail => mailId === mail.id)
     return Promise.resolve(mail)
+}
+
+function save(mail) {
+    if(mail.id) return _update(mail)
+    else return _add(mail)
+}
+
+function _add(title, body, address) {
+    let mails = _loadFromStorage()
+    const mail = _createMail(title, body, address)
+    mails = [mail, ...mails]
+    _saveToStorage(mails)
+    return Promise.resolve(mail)
+}
+
+function _createMail(title, body,address) {
+    gId++
+    return     {
+        id: 'e' + gId,
+        title: 'Frontend Development',
+        subject: 'Frontend developers work on the part',
+        body: 'Frontend developers work on the part of the product with which the user interacts. They are primarily concerned with the user interface (UI). For example, they might create the layout, visual aspects, and interactive elements of a website or app. However, their role isn’t identical to that of a UI or user experience (UX) designer. They also fix bugs and make certain that the UI can run on different browsers.',
+        isIn: false,
+        isRead: false,
+        isStared: false,
+        isDraft: false,
+        isSent: true,
+        sentAt: Date.now,
+        from: 'user@appsus.com',
+        to: address
+    }
+}
+
+function _update(mailToUpdate) {
+    let mails = _loadFromStorage()
+    mails = mails.map(mail => mail.id === mailToUpdate.id ? mailToUpdate : mail)
+    _saveToStorage(mails)
+    return Promise.resolve(mailToUpdate)
+}
+
+function remove(mailId) {
+    let mails = _loadFromStorage()
+    mails = mails.filter(mail => mail.id !== mailId)
+    _saveToStorage(mails)
+    return Promise.resolve()
 }
 
 function _saveToStorage(mails) {
