@@ -1,12 +1,12 @@
 .note-list {
     margin-block-start: 5rem;
-    grid-template-columns: repeat(auto-fill, 235px);
+    grid-template-columns: repeat(auto-fill, 231px);
     gap: 20px;
     margin-inline-start: 2rem;
 }
 
 .note-list>a {
-    height: fit-content;
+    height: min-content;
 }
 .color-pallete{
     border-radius: 10px;
