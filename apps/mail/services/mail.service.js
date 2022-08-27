@@ -1,4 +1,5 @@
 import { storageService } from '../../../services/storage.service.js'
+import { utilService } from '../../../services/util.service.js'
 
 export const mailService = {
     query,
@@ -8,7 +9,6 @@ export const mailService = {
 }
 
 const KEY = 'mailDB'
-var gId = 110
 
 const gMails = [
     {
@@ -183,10 +183,10 @@ function _add({ title, body, address }) {
 }
 
 function _createMail(title, body, address) {
-    gId++
+    const id = utilService.makeId()
     const subject = body.substring(0, 36)
     return {
-        id: 'e' + gId,
+        id,
         title,
         subject,
         body,

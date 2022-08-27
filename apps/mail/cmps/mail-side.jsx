@@ -1,52 +1,34 @@
 import { MailCompose } from './mail-compose.jsx';
 
 
-export function MailSide({ renderList }) {
+export class MailSide extends React.Component {
 
-    function onFilter(filterBy) {
-        console.log(123);
+    state = {
+        displayCompose: false
     }
 
-    let displayCompose = false
-
-    function Compose() {
-        displayCompose = true
+    onFilter(filterBy) {
+        this.setState
     }
 
-    return <section className="mail-side flex column">
-        <button className="compose-btn" onClick={Compose()}>+ Compose </button>
 
-        <div className="side-btn" onClick={onFilter('inbox')}>Inbox</div>
-        <div className="side-btn" onClick={onFilter('starred')}>Starred</div>
-        <div className="side-btn" onClick={onFilter('sent')}>Sent Mail</div>
-        <div className="side-btn" onClick={onFilter('drafts')}>Drafts</div>
+    Compose() {
+        this.setState({displayCompose: true})
+    }
 
-        <MailCompose renderList={renderList} display={displayCompose}/>
-    </section>
+    render() {
+
+        return <section className="mail-side flex column">
+            <button className="compose-btn" onClick={()=>this.Compose()}>+ Compose </button>
+
+            <div className="side-btn" onClick={()=>this.onFilter('inbox')}>Inbox</div>
+            <div className="side-btn" onClick={()=>this.onFilter('starred')}>Starred</div>
+            <div className="side-btn" onClick={()=>this.onFilter('sent')}>Sent Mail</div>
+            <div className="side-btn" onClick={()=>this.onFilter('drafts')}>Drafts</div>
+
+            <MailCompose renderList={this.props.renderList} display={this.state.displayCompose} />
+        </section>
+    }
 }
+<button onClick={()=>onRemoveCar(car.id)}>X</button>
 
-// export class MailSide extends React.Component {
-
-//     state = {
-//         filterBy: {
-//             inbox: '',
-//             starred: '',
-//             sent: '',
-//             drafts: ''
-//         }
-//     }
-
-//     onFilter = () => {
-
-//     }
-
-//     render() {
-//         return <section>
-//             <button className="side-btn" onClick={ this.onFilter ()}>123</button>
-//             <button className="side-btn" onClick={ this.onFilter ()}>123</button>
-//             <button className="side-btn" onClick={ this.onFilter ()}>123</button>
-//             <button className="side-btn" onClick={ this.onFilter ()}>123</button>
-//         </section >
-//     }
-
-// }

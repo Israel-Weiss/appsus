@@ -8,7 +8,7 @@ export const utilService = {
     getMonthName,
 }
 
-function makeId(length = 6) {
+function makeId(length = 4) {
     var txt = ''
     var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 

@@ -1,15 +1,28 @@
 import { mailService } from "../services/mail.service.js"
 
+let isClose = false
+
 export class MailCompose extends React.Component {
 
     state = {
-        display: this.props.display,
+        display: false,
         mail: {
             title: '',
             body: '',
             addres: ''
         }
     }
+
+    componentDidUpdate() {
+        if (this.props.display === this.state.display) return
+        this.isDispley()
+    }
+
+    isDispley = () => {
+        if (isClose) return
+        this.setState({ display: this.props.display })
+    }
+
 
     handleChange = ({ target }) => {
         const field = target.name
@@ -21,6 +34,8 @@ export class MailCompose extends React.Component {
 
     onSaveMail = (ev) => {
         ev.preventDefault()
+        if (ev.target[0].value.length === 0
+            || ev.target[1].value.length === 0) return
         mailService.save(this.state.mail)
             .then(() => {
                 ev.target[0].value = ''
@@ -32,13 +47,24 @@ export class MailCompose extends React.Component {
     }
 
     closeCompose = () => {
-        this.state.display = false
+        isClose = true
+        this.setState({ display: false })
+    }
+
+    cancelClose = () => {
+        isClose = false
     }
 
     render() {
+        setTimeout(() => {
+            this.cancelClose()
+        }, 100);
         const { title, body, addres } = this.state.mail
         if (this.state.display) return <section className="mail-compose">
             <form className="flex column align-center" onSubmit={this.onSaveMail}>
+                <div className="compose-header">
+                    <h2>New masage</h2>
+                </div>
                 <div className="compose-input">
                     <label htmlFor="addres">To</label>
                     <input type="email" name="addres"
@@ -58,15 +84,18 @@ export class MailCompose extends React.Component {
                 </div>
 
                 <div className="compose-input">
-                    <label htmlFor="body">body</label>
-                    <input type="text" name="body"
+                    <textarea type="text" name="body"
                         value={body} id="body"
                         onChange={this.handleChange}
                         className="compose-body"
                     />
                 </div>
 
-                <button>Submit!</button>
+                <div className="compose-futer">
+                    <div className="close-btn" onClick={this.closeCompose}>Close</div>
+                    <button>Submit!</button>
+                </div>
+
             </form>
         </section>
     }
