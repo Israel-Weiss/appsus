@@ -18,12 +18,12 @@ export class AppHeader extends React.Component {
 
         return <header className="app-header">
             <Link to="/">
-                <img src="./../assets/img/logo.png" className="logo" />
+                <img src="../assets/img/logo.png" className="logo" />
             </Link>
             <nav>
                 <NavLink exact to="/">Home</NavLink>
                 <NavLink to="/about">About</NavLink>
-                <img src="./../assets/img/appnavbar.png" onClick={toggleNav} className="nav-apps" />
+                <img src="../assets/img/appnavbar.png" onClick={toggleNav} className="nav-apps" />
                 {isNavOpen && <div className="flex justify-center align-center opened-nav">
                     <Link to="/mail" className="flex column" onClick={toggleNav}>
                         <i className="fa-solid fa-envelope"></i>
