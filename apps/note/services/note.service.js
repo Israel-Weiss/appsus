@@ -1,11 +1,12 @@
 import { storageService } from '../../../services/storage.service.js'
-import {utilService} from '../../../services/util.service.js'
+import { utilService } from '../../../services/util.service.js'
 
 export const noteService = {
     queryNotes,
     addNote,
     updateNote,
     removeNote,
+    getNoteById,
     changeColor
 }
 
@@ -19,23 +20,28 @@ function queryNotes() {
     return Promise.resolve(notes)
 }
 
-function addNote(type,content) {
+function getNoteById(id) {
+    let notes = storageService.loadFromStorage('notesDB')
+    const note = notes.find(note => note.id === id)
+    return Promise.resolve(note)
+}
+
+function addNote(type, content) {
     let notes = storageService.loadFromStorage('notesDB')
     let newNote
 
     switch (type) {
         case 'note-txt':
-            newNote = _createNote(type,content)
+            newNote = _createNote(type, content)
             break;
         case 'note-img':
-            newNote = _createNote(type,content)
+            newNote = _createNote(type, content)
             break;
         case 'note-todos':
             let info = createTodosNote(content)
-            newNote = _createNote(type,info)
+            newNote = _createNote(type, info)
             break;
     }
-    console.log(newNote);
     notes.unshift(newNote)
     storageService.saveToStorage('notesDB', notes)
     return Promise.resolve(newNote)
@@ -47,16 +53,16 @@ function createTodosNote(content) {
         todos: []
     }
     let todoSpliter = content.txt.split(",")
-    const todos = todoSpliter.map(todo=> {
-        info.todos.push({txt: todo, doneAt: null})
+    const todos = todoSpliter.map(todo => {
+        info.todos.push({ txt: todo, doneAt: null })
     })
 
     return info
 }
 
-function changeColor(noteId,color) {
+function changeColor(noteId, color) {
     let notes = storageService.loadFromStorage('notesDB')
-    const note = notes.find(note=> note.id === noteId)
+    const note = notes.find(note => note.id === noteId)
     note.style.backgroundColor = color
     storageService.saveToStorage('notesDB', notes)
     return Promise.resolve(notes)
@@ -72,7 +78,7 @@ function updateNote(updatedNote) {
 function removeNote(id) {
     let notes = storageService.loadFromStorage('notesDB')
     notes = notes.filter(note => note.id !== id)
-    storageService.saveToStorage('notesDB',notes)
+    storageService.saveToStorage('notesDB', notes)
     return Promise.resolve()
 }
 
@@ -81,7 +87,10 @@ function _createNote(type, content) {
         id: utilService.makeId(3),
         type,
         isPinned: false,
-        info: content
+        info: content,
+        style: {
+            backgroundColor: "fff"
+        }
     }
 }
 

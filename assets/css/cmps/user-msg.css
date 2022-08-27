@@ -1,21 +1,30 @@
 .user-msg {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     background-color: lightgray;
     padding: 1em;
     position: absolute;
     top: 1em;
     right: 1em;
+    width: 250px;
 }
 
 .user-msg.success {
-    background-color: lightgreen;
+    border: 3px solid lightgreen;
+    background-color: #fff;
 }
 
 .user-msg.error {
-    background-color: lightpink;
+    border: 3px solid lightpink;
 }
 
 
 .user-msg button{
-    float: right;
+    position: fixed;
+    top: 0;
+    right: 0;
+    font-size: 1.5rem;
     margin: 1em;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
 }

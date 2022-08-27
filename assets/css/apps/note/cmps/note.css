@@ -1,17 +1,25 @@
 .note-preview {
     width: 230px;
-    min-height: 100px;
-    max-height: fit-content;
     border-radius: 10px;
     justify-content: space-between;
     border: 0.5px solid #e0e0e0;
+    min-height: 100px;
+    max-height: fit-content;
+}
+.note-txt,
+.note-img .text-container,
+.note-todos{
+    min-height: 100px;
+    max-height: fit-content;
+}
+.note-txt > *,
+.note-img .text-container > *,
+.note-todos > *{
+    margin: 1rem;
 }
 .note-preview > *,
 .new-note span{
     font-family: sans-serif;
-}
-.note-txt > *{
-    margin-inline-start: 1rem;
 }
 .note-img img{
     max-height: 190px;

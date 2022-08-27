@@ -1,4 +1,5 @@
 import { noteService } from '../services/note.service.js'
+import { showSuccessMsg } from '../../../services/event-bus.service.js'
 
 export class NewNote extends React.Component {
 
@@ -16,6 +17,10 @@ export class NewNote extends React.Component {
 
     isOpenedInput = false
     input2Ref = React.createRef()
+
+    loadNotes = () => {
+        this.setState({notes: this.props.notes})
+    }
 
     openInput = () => {
         this.setState({ input2Style: { display: 'block' }, input1placeHolder: "Title" }, () => {
@@ -50,6 +55,10 @@ export class NewNote extends React.Component {
             const info = { title: newNote.title, txt: newNote.body }
             noteService.addNote(type, info)
                 .then(this.closeInput())
+            newNote.title = ''
+            newNote.body = ''
+            showSuccessMsg("New note added")
+            this.props.loadNotes()
         }
     }
 
@@ -69,8 +78,10 @@ export class NewNote extends React.Component {
     render() {
 
         
-        const { input1Style, input2Style, input1placeHolder } = this.state
+        const { input1Style, input2Style, input1placeHolder, newNote } = this.state
         const { openInput, handleChange, handleNewNote, handleType, input2Ref } = this
+
+        // console.log(notes);
 
         return <div className="new-note">
             <div className="input1">
@@ -78,6 +89,7 @@ export class NewNote extends React.Component {
                     placeholder={input1placeHolder}
                     onFocus={openInput}
                     name="title"
+                    value={newNote.title}
                     onChange={handleChange}
                     style={input1Style} />
             </div>
@@ -88,6 +100,7 @@ export class NewNote extends React.Component {
                         placeholder="Take a Note..."
                         ref={input2Ref}
                         name="body"
+                        value={newNote.body}
                         onChange={handleChange}
                         onFocus={openInput} />
                 </div>
