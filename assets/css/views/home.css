@@ -1,0 +1,17 @@
+.home {
+    height: 91vh;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+    .home .titles {
+        height: 10%;
+        justify-content: space-between;
+    }
+
+    .home h1 {
+        font-size: 3rem;
+    }
+
+    .home small {
+        font-size: 1rem;
+        font-style: italic;
+    }

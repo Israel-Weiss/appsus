@@ -1,24 +1,51 @@
 header {
-    background: lightcyan;
+    background: #606060;
     border-bottom: 2px solid white;
 }
-
 .app-header {
     display: flex;
     justify-content: space-between;
     padding: 20px 0;
 }
-
-nav a {
-    margin: .5em;
+.logo{
+    width: 90px;
+    margin-left: 1rem;
+}
+.nav-apps{
+    width: 32px;
+    margin-right: 3rem;
+    cursor: pointer;
+}
+nav a{
+    margin-right: 1.5em;
 }
 
 nav a:active {
-    color: purple;
+    color: #fff;
 }
 
 nav a.active {
-    color: darkblue;
+    color: #b2a284;
     font-weight: bold;
     text-decoration: overline;
+}
+.opened-nav{
+    position: absolute;
+    top: 76px;
+    right: 10px;
+    width: 200px;
+    height: 100px;
+    background-color: white;
+    border: 5px solid #e3e3e3;
+}
+.opened-nav i{
+    font-size: 2rem;
+    margin-block-end: .5rem;
+}
+.opened-nav a{
+    margin: 1rem;
+    padding: 1rem;
+}
+.opened-nav a:hover{
+    background-color: #d8d7d7;
 }

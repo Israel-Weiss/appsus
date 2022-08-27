@@ -7,7 +7,8 @@ export const noteService = {
     updateNote,
     removeNote,
     getNoteById,
-    changeColor
+    changeColor,
+    pinNote
 }
 
 function queryNotes() {
@@ -20,26 +21,34 @@ function queryNotes() {
     return Promise.resolve(notes)
 }
 
+function pinNote(id) {
+    let notes = storageService.loadFromStorage('notesDB')
+    const note = notes.find(note=> note.id === id)
+    note.isPinned = !note.isPinned
+    storageService.saveToStorage('notesDB', notes)
+    return Promise.resolve(notes)
+}
+
 function getNoteById(id) {
     let notes = storageService.loadFromStorage('notesDB')
     const note = notes.find(note => note.id === id)
     return Promise.resolve(note)
 }
 
-function addNote(type, content) {
+function addNote(type, content, bgColor) {
     let notes = storageService.loadFromStorage('notesDB')
     let newNote
 
     switch (type) {
         case 'note-txt':
-            newNote = _createNote(type, content)
+            newNote = _createNote(type, content, bgColor)
             break;
         case 'note-img':
-            newNote = _createNote(type, content)
+            newNote = _createNote(type, content, bgColor)
             break;
         case 'note-todos':
             let info = createTodosNote(content)
-            newNote = _createNote(type, info)
+            newNote = _createNote(type, info, bgColor)
             break;
     }
     notes.unshift(newNote)
@@ -82,14 +91,14 @@ function removeNote(id) {
     return Promise.resolve()
 }
 
-function _createNote(type, content) {
+function _createNote(type, content, bgColor) {
     return {
         id: utilService.makeId(3),
         type,
         isPinned: false,
         info: content,
         style: {
-            backgroundColor: "fff"
+            backgroundColor: bgColor
         }
     }
 }

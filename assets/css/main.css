@@ -29,3 +29,5 @@
 @import './apps/note/cmps/note.css';
 @import './apps/note/cmps/note-list.css';
 @import './apps/note/cmps/new-note.css';
+/* NOTE MQ */
+@import './apps/note/cmps/mq.css';

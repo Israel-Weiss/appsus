@@ -1,5 +1,6 @@
 import { NewNote } from '../cmps/new-note.jsx'
 import { NoteList } from '../cmps/note-list.jsx'
+import { PinnedList } from '../cmps/note-pinned-list.jsx'
 import { noteService } from '../services/note.service.js'
 import { showSuccessMsg } from '../../../services/event-bus.service.js'
 
@@ -14,16 +15,21 @@ export class NoteIndex extends React.Component {
         this.loadNotes()
     }
 
+    pinNote = (id) => {
+        noteService.pinNote(id)
+            .then(notes => this.setState({ notes }))
+    }
+
     removeNote = (id) => {
         noteService.removeNote(id)
             .then(this.setState({ notes: this.state.notes.filter(note => note.id !== id) }))
-            showSuccessMsg("Note deleted")
+        showSuccessMsg("Note deleted")
     }
 
     changeColor = (note, color) => {
         noteService.changeColor(note, color)
             .then(notes => this.setState({ notes }))
-            showSuccessMsg("Note color has changed")
+        showSuccessMsg("Note color has changed")
     }
 
     loadNotes = () => {
@@ -34,10 +40,13 @@ export class NoteIndex extends React.Component {
     render() {
         const { notes } = this.state
 
+        const { removeNote, pinNote, changeColor } = this
+
         return (
             <div className="note-index flex column">
                 <NewNote loadNotes={this.loadNotes} />
-                <NoteList notes={notes} onRemoveNote={this.removeNote} onChangeColor={this.changeColor} />
+                <PinnedList notes={notes} onRemoveNote={removeNote} onPinNote={pinNote} onChangeColor={changeColor} />
+                <NoteList notes={notes} onRemoveNote={removeNote} onPinNote={pinNote} onChangeColor={changeColor} />
             </div>
         )
     }

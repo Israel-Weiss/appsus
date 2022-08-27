@@ -4,14 +4,16 @@ import { showSuccessMsg } from '../../../services/event-bus.service.js'
 export class NewNote extends React.Component {
 
     state = {
-        input1Style: { height: '40px' },
-        input2Style: { display: 'none' },
+        input1Style: { height: '40px', backgroundColor: '#fff' },
+        input2Style: { display: 'none', backgroundColor: '#fff' },
         input1placeHolder: 'Take a note...',
+        colorPalleteOpened: false,
         openedColorPallete: false,
         newNote: {
             type: 'note-txt',
             title: '',
-            body: ''
+            body: '',
+            bgColor: '#fff'
         }
     }
 
@@ -19,7 +21,7 @@ export class NewNote extends React.Component {
     input2Ref = React.createRef()
 
     loadNotes = () => {
-        this.setState({notes: this.props.notes})
+        this.setState({ notes: this.props.notes })
     }
 
     openInput = () => {
@@ -31,9 +33,11 @@ export class NewNote extends React.Component {
     }
 
     closeInput = () => {
-        this.setState((prevState) => ({ input1Style: { ...prevState.input1Style, marginBlockStart: '0' },
-        input1placeHolder: 'Take a note...',
-        input2Style: { display: 'none' }}))
+        this.setState((prevState) => ({
+            input1Style: { ...prevState.input1Style, marginBlockStart: '0' },
+            input1placeHolder: 'Take a note...',
+            input2Style: { display: 'none' }
+        }))
     }
 
     handleChange = ({ target }) => {
@@ -53,7 +57,8 @@ export class NewNote extends React.Component {
         else {
             const type = newNote.type
             const info = { title: newNote.title, txt: newNote.body }
-            noteService.addNote(type, info)
+            const bgColor = newNote.bgColor
+            noteService.addNote(type, info, bgColor)
                 .then(this.closeInput())
             newNote.title = ''
             newNote.body = ''
@@ -65,25 +70,37 @@ export class NewNote extends React.Component {
     handleType = (type) => {
         switch (type) {
             case 'note-img':
-                this.setState({input1placeHolder: 'Put here the Image Source'})
+                this.setState({ input1placeHolder: 'Put here the Image Source' })
                 break;
             case 'note-todos':
-                this.setState({input1placeHolder: 'put your todos under the title comma seperated'})
+                this.setState({ input1placeHolder: 'put your todos under the title comma seperated' })
             default:
                 break;
         }
         this.setState({ newNote: { ...this.state.newNote, type: type } })
     }
 
+    handleColorPallete = () => {
+        this.setState({ colorPalleteOpened: !this.state.colorPalleteOpened })
+    }
+
+    handleBgColor = (color) => {
+        this.setState({
+            newNote: { ...this.state.newNote, bgColor: color },
+            colorPalleteOpened: !this.state.colorPalleteOpened,
+            input1Style: { ...this.state.input1Style, backgroundColor: color }
+        })
+    }
+
     render() {
 
-        
-        const { input1Style, input2Style, input1placeHolder, newNote } = this.state
-        const { openInput, handleChange, handleNewNote, handleType, input2Ref } = this
+
+        const { input1Style, input2Style, input1placeHolder, newNote, colorPalleteOpened } = this.state
+        const { openInput, handleChange, handleNewNote, handleType, handleBgColor, input2Ref, handleColorPallete } = this
 
         // console.log(notes);
 
-        return <div className="new-note">
+        return <div className="new-note" style={{ backgroundColor: input1Style.backgroundColor }}>
             <div className="input1">
                 <input type="text"
                     placeholder={input1placeHolder}
@@ -102,11 +119,19 @@ export class NewNote extends React.Component {
                         name="body"
                         value={newNote.body}
                         onChange={handleChange}
-                        onFocus={openInput} />
+                        onFocus={openInput}
+                        style={{ backgroundColor: input1Style.backgroundColor }} />
                 </div>
                 <div className="btns-new-note flex space-between">
+                    {colorPalleteOpened && <div className="color-pallete flex space-between align-center">
+                        <button className="color-btn lightblue" onClick={() => handleBgColor('lightblue')}></button>
+                        <button className="color-btn lightgreen" onClick={() => handleBgColor('lightgreen')}></button>
+                        <button className="color-btn goldenrod" onClick={() => handleBgColor('goldenrod')}></button>
+                        <button className="color-btn lightsalmon" onClick={() => handleBgColor('lightsalmon')}></button>
+                        <button className="color-btn lightcoral" onClick={() => handleBgColor('lightcoral')}></button>
+                    </div>}
                     <div className="new-note-edit-btns flex space-between">
-                        <i className="fa-solid fa-palette"></i>
+                        <i className="fa-solid fa-palette" onClick={handleColorPallete}></i>
                         <i className="fa-solid fa-image" onClick={() => { handleType('note-img') }}></i>
                         <i className="fa-solid fa-list" onClick={() => { handleType('note-todos') }}></i>
                     </div>

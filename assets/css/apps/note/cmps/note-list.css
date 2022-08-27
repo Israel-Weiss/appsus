@@ -4,6 +4,18 @@
     gap: 20px;
     margin-inline-start: 2rem;
 }
+.pinned-list {
+    margin-block-start: 3rem;
+    grid-template-columns: repeat(auto-fill, 231px);
+    gap: 20px;
+    margin-inline-start: 2rem;
+}
+.pinned-notes h1{
+    font-family: system-ui, -apple-system;
+    font-weight: 200;
+    width: fit-content;
+    margin-inline-start: 2rem;
+}
 
 .note-list>a {
     height: min-content;
